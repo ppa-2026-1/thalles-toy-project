@@ -45,3 +45,87 @@ Content-Type: application/json
     ],
     "company": "potato inc"
 }
+
+# TICKETS API ===============================================================
+
+### Criar ticket válido
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "acao": "Criar",
+  "objeto": "Relatório",
+  "detalhes": "Gerar relatório mensal",
+  "criador": "user@email.com"
+}
+
+### Criar ticket sem destinatário (deve assumir criador)
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "acao": "Atualizar",
+  "objeto": "Sistema",
+  "detalhes": "Atualizar versão",
+  "criador": "user@email.com"
+}
+
+### Criar ticket inválido (sem criador)
+POST /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "acao": "Excluir",
+  "objeto": "Arquivo"
+}
+
+### Listar todos os tickets
+GET /api/v1/tickets HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### Buscar ticket por ID
+GET /api/v1/tickets/1 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### Atualizar status para "Em andamento"
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "Em andamento",
+  "responsavel": "admin@email.com"
+}
+
+### Atualizar status para "Concluido"
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "Concluido"
+}
+
+### Cancelar ticket com motivo
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "Cancelado",
+  "motivo": "Erro no sistema"
+}
+
+### Cancelar ticket sem motivo (inválido)
+PATCH /api/v1/tickets/1/status HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+  "status": "Cancelado"
+}

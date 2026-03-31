@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,10 +40,13 @@ public class TicketController {
   @PatchMapping("/{id}/status")
   public void atualizarStatus(
     @PathVariable Integer id,
-    @RequestParam String status,
-    @RequestParam(required = false) String motivo,
-    @RequestParam(required = false) String responsavel
+    @RequestBody Map<String, String> body
   ) {
-    ticketService.atualizarStatus(id, status, motivo, responsavel);
+    ticketService.atualizarStatus(
+      id,
+      body.get("status"),
+      body.get("motivo"),
+      body.get("responsavel")
+    );
   }
 }
