@@ -1,9 +1,11 @@
-package com.example.demo;
+package com.example.demo.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
+
+import com.example.demo.repository.entity.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;

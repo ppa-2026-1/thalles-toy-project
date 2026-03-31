@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.model.dto.NewUserDTO;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.entity.User;
+import com.example.demo.repository.RoleRepository;
 
 
 @RestController
@@ -39,7 +44,7 @@ public class UserController {
     
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void newUser(@RequestBody NewUser newUser) {
+    public void newUser(@RequestBody NewUserDTO newUser) {
 
         if (newUser.email() == null || newUser.password() == null) {
             throw new IllegalArgumentException("Email e senha são obrigatórios");
