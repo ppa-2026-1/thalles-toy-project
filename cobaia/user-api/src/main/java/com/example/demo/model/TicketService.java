@@ -22,6 +22,10 @@ public class TicketService {
   @Transactional
   public void criarTicket(Ticket ticket) {
 
+    if (ticket.getCriador() == null || ticket.getCriador().isEmpty()) {
+      throw new IllegalArgumentException("Criador é obrigatório");
+    }
+    
     if (ticket.getDestinatario() == null || ticket.getDestinatario().isEmpty()) {
       ticket.setDestinatario(ticket.getCriador());
     }
@@ -47,6 +51,7 @@ public class TicketService {
   public void atualizarStatus(Integer id, String novoStatus, String motivo, String responsavel) {
 
     Ticket ticket = buscarPorId(id);
+    validarStatus(novoStatus);
 
     if ("Em andamento".equalsIgnoreCase(novoStatus)) {
       ticket.setResponsavel(responsavel);
@@ -63,4 +68,12 @@ public class TicketService {
     ticket.setUpdatedAt(LocalDateTime.now());
     ticketRepository.save(ticket);
   }
+  private void validarStatus(String status) {
+    List<String> statusValidos = List.of("Aberto", "Em andamento", "Concluido", "Cancelado");
+
+    if (!statusValidos.contains(status)) {
+      throw new IllegalArgumentException("Status inválido");
+    }
+  }
+
 }
