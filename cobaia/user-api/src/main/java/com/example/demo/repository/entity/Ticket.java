@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +24,9 @@ public class Ticket {
   @Column(nullable = false)
   private String objeto;
 
+  @Column(columnDefinition = "TEXT")
+  private String observadores;
+
   @Column
   private String detalhes;
 
@@ -34,13 +39,14 @@ public class Ticket {
   @Column(length = 100)
   private String responsavel;
 
-  @Column(nullable = false, length = 20)
-  private String status = "Aberto";
+  @Enumerated(EnumType.STRING)
+  private TicketStatus status = TicketStatus.ABERTO;
 
   @Column
   private String motivo;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
+  @Column(name = "created_at", updatable = false)
+  @org.hibernate.annotations.CreationTimestamp 
   private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
@@ -104,11 +110,11 @@ public class Ticket {
     this.responsavel = responsavel;
   }
 
-  public String getStatus() {
+  public TicketStatus getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(TicketStatus status) {
     this.status = status;
   }
 
@@ -131,4 +137,14 @@ public class Ticket {
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
+
+  public String getObservadores() {
+    return observadores;
+  }
+
+  public void setObservadores(String observadores) {
+    this.observadores = observadores;
+  }
+
+  
 }

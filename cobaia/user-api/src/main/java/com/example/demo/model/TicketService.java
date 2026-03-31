@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.dto.TicketRequestDTO;
 import com.example.demo.repository.TicketRepository;
 import com.example.demo.repository.entity.Ticket;
+import com.example.demo.repository.entity.TicketStatus;
 
 import jakarta.transaction.Transactional;
 
@@ -20,20 +22,23 @@ public class TicketService {
   }
 
   @Transactional
-  public void criarTicket(Ticket ticket) {
-
-    if (ticket.getCriador() == null || ticket.getCriador().isEmpty()) {
-      throw new IllegalArgumentException("Criador é obrigatório");
-    }
+  public void criarTicket(TicketRequestDTO dto) {
+    Ticket ticket = new Ticket();
+    ticket.setAcao(dto.acao());
+    ticket.setObjeto(dto.objeto());
+    ticket.setDetalhes(dto.detalhes());
+    ticket.setCriador(dto.criador());
     
-    if (ticket.getDestinatario() == null || ticket.getDestinatario().isEmpty()) {
-      ticket.setDestinatario(ticket.getCriador());
+    if (dto.observadores() != null && !dto.observadores().isEmpty()) {
+      ticket.setObservadores(String.join(", ", dto.observadores()));
     }
 
-    if (ticket.getStatus() == null) {
-      ticket.setStatus("Aberto");
-    }
+    ticket.setDestinatario(
+      (dto.destinatario() == null || dto.destinatario().isEmpty()) 
+      ? dto.criador() : dto.destinatario()
+    );
 
+    ticket.setStatus(TicketStatus.ABERTO);
     ticket.setUpdatedAt(LocalDateTime.now());
     ticketRepository.save(ticket);
   }
@@ -48,16 +53,15 @@ public class TicketService {
   }
 
   @Transactional
-  public void atualizarStatus(Integer id, String novoStatus, String motivo, String responsavel) {
+  public void atualizarStatus(Integer id, TicketStatus novoStatus, String motivo, String responsavel) {
 
     Ticket ticket = buscarPorId(id);
-    validarStatus(novoStatus);
 
-    if ("Em andamento".equalsIgnoreCase(novoStatus)) {
+    if (TicketStatus.EM_ANDAMENTO == novoStatus) {
       ticket.setResponsavel(responsavel);
     }
 
-    if ("Cancelado".equalsIgnoreCase(novoStatus)) {
+    if (TicketStatus.CANCELADO == novoStatus) {
       if (motivo == null || motivo.isEmpty()) {
         throw new IllegalArgumentException("Motivo é obrigatório ao cancelar");
       }
@@ -68,12 +72,4 @@ public class TicketService {
     ticket.setUpdatedAt(LocalDateTime.now());
     ticketRepository.save(ticket);
   }
-  private void validarStatus(String status) {
-    List<String> statusValidos = List.of("Aberto", "Em andamento", "Concluido", "Cancelado");
-
-    if (!statusValidos.contains(status)) {
-      throw new IllegalArgumentException("Status inválido");
-    }
-  }
-
 }
