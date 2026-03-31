@@ -26,3 +26,18 @@ CREATE TABLE IF NOT EXISTS profiles (
     type    VARCHAR(255),
     FOREIGN KEY (id) REFERENCES users(id)
 );
+
+CREATE TABLE IF NOT EXISTS ticket (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    acao VARCHAR(255) NOT NULL,
+    objeto VARCHAR(255) NOT NULL,
+    detalhes TEXT,
+    criador VARCHAR(255) NOT NULL,
+    destinatario VARCHAR(255),
+    responsavel VARCHAR(255),
+    status VARCHAR(50) NOT NULL,
+    motivo TEXT,
+    observadores TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
