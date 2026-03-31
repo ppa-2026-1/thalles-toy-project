@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.dto.NewUserDTO;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.entity.Profile;
+import com.example.demo.repository.entity.Role;
 import com.example.demo.repository.entity.User;
 import com.example.demo.repository.RoleRepository;
 
