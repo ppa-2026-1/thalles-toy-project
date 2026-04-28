@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.UserService;
+import com.example.demo.services.UserService;
 import com.example.demo.model.dto.NewUserDTO;
 import com.example.demo.model.validation.UniqueUser;
 import com.example.demo.repository.RoleRepository;
