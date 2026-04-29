@@ -37,3 +37,16 @@ VALUES
     ('Cross-Site Scripting (XSS) in user profile page', 'MEDIUM', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('Insecure Direct Object Reference (IDOR) in file download feature', 'HIGH', 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ;
+
+INSERT INTO vulnerability_reports (user_id, system_under_test, created_at, updated_at)
+WITH RECURSIVE cnt(x) AS (
+   SELECT 1
+   UNION ALL
+   SELECT x+1 FROM cnt WHERE x < 50 -- Gera 50 reports
+)
+SELECT 
+    (x % 2) + 1,             
+    'System Automated ' || x,  
+    datetime('now', '-' || x || ' days'), 
+    CURRENT_TIMESTAMP
+FROM cnt;

@@ -52,16 +52,56 @@ Content-Type: application/json
     "company": "potato inc"
 }
 
+###
+GET /api/v1/vulnerability-reports?page=1&size=5
+Host: {{host}}
+Accept: application/json
+
 ### GET FIRST 10 REPORTS
 
 GET /api/v1/vulnerability-reports HTTP/1.1
 Host: {{host}}
 Accept: application/json
 
+### GET FIRST PAGE WITH SMALL SIZE
 
+GET /api/v1/vulnerability-reports?page=1&size=2 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+
+### GET SECOND PAGE
+
+GET /api/v1/vulnerability-reports?page=2&size=2 HTTP/1.1
+Host: {{host}}
+Accept: application/json
 
 ### GET THIRD PAGE
 
 GET /api/v1/vulnerability-reports?page=3&size=10 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### GET NEGATIVE PAGE
+
+GET /api/v1/vulnerability-reports?page=-1&size=10 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### GET NEGATIVE SIZE 
+
+GET /api/v1/vulnerability-reports?page=1&size=-5 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### GET SIZE 0
+
+GET /api/v1/vulnerability-reports?page=1&size=0 HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### GET SIZE ABOVE LIMIT
+
+GET /api/v1/vulnerability-reports?page=1&size=101 HTTP/1.1
 Host: {{host}}
 Accept: application/json
