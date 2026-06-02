@@ -5,15 +5,17 @@
 ### Autenticar e receber um TOKEN
 POST /api/auth/login HTTP/1.1
 Host: localhost:8080
+Content-Type: application/json
 
 {
-    "username": "teste",
-    "password": "1234"
+    "username": "papas",
+    "password": "1234RT56"
 }
 
 ### Sair
 POST /api/auth/logout HTTP/1.1
 Host: localhost:8080
+Authorization: Bearer 88b8ebfe-4a4f-4112-81ff-b91326ef9388
 
 ### TODOS OS USUÁRIOS
 GET /api/v1/users HTTP/1.1
@@ -26,7 +28,7 @@ Accept: application/json
 GET /api/v1/users HTTP/1.1
 Host: {{host}}
 Accept: application/json
-Authorization: Bearer akldlajksdkasjdl
+Authorization: Bearer 88b8ebfe-4a4f-4112-81ff-b91326ef9388
 
 ### Create a new valid User
 # @name = createNewUser

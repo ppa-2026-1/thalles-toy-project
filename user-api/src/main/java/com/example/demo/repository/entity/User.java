@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 public class User { // tabela users no banco de dados
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, unique = true, length = 255)

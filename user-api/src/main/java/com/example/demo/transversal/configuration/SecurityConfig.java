@@ -12,23 +12,25 @@ import com.example.demo.transversal.auth.AuthFilter;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    AuthFilter authFilter(AuthService authService) {
-        return new AuthFilter(authService);
-    }
+  @Bean
+  AuthFilter authFilter(AuthService authService) {
+    return new AuthFilter(authService);
+  }
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthFilter authFilter) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/**").permitAll() 
-                    .anyRequest().authenticated())
-                .headers(headers -> headers
-                .frameOptions(cust -> cust.sameOrigin()))
-                .httpBasic(basic -> basic.disable())
-                .formLogin(login -> login.disable())
-                .build();
-    }
+  @Bean
+  SecurityFilterChain securityFilterChain(HttpSecurity http, AuthFilter authFilter) throws Exception {
+    return http
+      .csrf(csrf -> csrf.disable())
+      .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+      .authorizeHttpRequests(auth -> auth
+          .requestMatchers("/api/auth/**").permitAll() 
+          .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/v1/users").permitAll() 
+          .requestMatchers("/error").permitAll() 
+          .anyRequest().authenticated()) 
+      .headers(headers -> headers
+          .frameOptions(cust -> cust.sameOrigin()))
+      .httpBasic(basic -> basic.disable())
+      .formLogin(login -> login.disable())
+      .build();
+  }
 }
