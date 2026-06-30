@@ -1,0 +1,60 @@
+@host=localhost:8081
+
+### Criar ticket
+POST http://{{host}}/api/v1/tickets
+Content-Type: application/json
+
+{
+  "acao": "Criar",
+  "objeto": "Notebook",
+  "detalhes": "Instalar softwares",
+  "criador": "admin@email.com"
+}
+
+### Criar ticket2
+POST http://{{host}}/api/v1/tickets
+Content-Type: application/json
+
+{
+  "acao": "Criar",
+  "objeto": "Notebook2",
+  "detalhes": "Instalar muitos softwares",
+  "criador": "admin@email.com"
+}
+
+###
+
+GET http://{{host}}/api/v1/tickets
+
+###
+
+GET http://{{host}}/api/v1/tickets/1
+
+###
+
+PATCH http://{{host}}/api/v1/tickets/1/status
+Content-Type: application/json
+
+{
+  "status":"Em andamento",
+  "responsavel":"ti@email.com"
+}
+
+###
+
+PATCH http://{{host}}/api/v1/tickets/1/status
+Content-Type: application/json
+
+{
+  "status":"Concluido"
+}
+
+###
+
+PATCH http://{{host}}/api/v1/tickets/1/status
+Content-Type: application/json
+
+{
+  "status":"Cancelado",
+  "motivo":"Erro"
+}
