@@ -1,82 +1,93 @@
 # USER API ================================================================
 
 @host=localhost:8080
+
 # AuthController
 ### Autenticar e receber um TOKEN
 POST /api/auth/login HTTP/1.1
-Host: localhost:8080
+Host: {{host}}
 Content-Type: application/json
 
 {
-    "username": "papas",
+    "username": "novo",
     "password": "1234RT56"
 }
 
 ### Sair
 POST /api/auth/logout HTTP/1.1
-Host: localhost:8080
-Authorization: Bearer 88b8ebfe-4a4f-4112-81ff-b91326ef9388
+Host: {{host}}
+Authorization: Bearer 0225c6df-d105-4786-acdc-11286a24487a
 
-### TODOS OS USUÁRIOS
-GET /api/v1/users HTTP/1.1
-Host: localhost:8080
-Accept: application/json
+# USERS ===================================================================
 
-### Get all users --- AUTENTICADO
-# @name= getAllUsers
-
+### Listar usuários
 GET /api/v1/users HTTP/1.1
 Host: {{host}}
 Accept: application/json
-Authorization: Bearer 88b8ebfe-4a4f-4112-81ff-b91326ef9388
 
-### Create a new valid User
-# @name = createNewUser
-
+### Listar usuários (autenticado)
+GET /api/v1/users HTTP/1.1
+Host: {{host}}
+Accept: application/json
+Authorization: Bearer e8e15551-9fbe-40f7-87da-aa9de6f8939e
+### Criar usuário válido
 POST /api/v1/users HTTP/1.1
 Host: {{host}}
 Content-Type: application/json
 
 {
-    "email": "batata@potato.com",
+    "email": "novoa@email.com",
     "password": "1234RT56",
-    "handle": "papas",
-    "name": "Kartofel",
+    "handle": "novoa",
+    "name": "Novoa Usuário",
     "roles": [
         "ROLE_USER"
     ],
-    "company": "potato inc"
+    "company": "Empresa"
 }
 
-
-### Try and create an invalid User
-# @name = tryCreateInvalidUser
-
+### Criar usuário inválido
 POST /api/v1/users HTTP/1.1
 Host: {{host}}
 Content-Type: application/json
 
 {
-    "email": "batata@potato.com",
+    "email": "novo@email.com",
     "password": "1234",
-    "handle": "papas",
-    "name": "Kartofel",
+    "handle": "novo",
+    "name": "Novo Usuário",
     "roles": [
         "ROLE_USER"
     ],
-    "company": "potato inc"
+    "company": "Empresa"
 }
 
-### GET FIRST 10 REPORTS
+# INTEGRAÇÃO USER -> TICKET ===============================================
 
+### Criar usuário (deve gerar automaticamente um ticket)
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "ticket@email.com",
+    "password": "1234RT56",
+    "handle": "ticketuser",
+    "name": "Usuário Ticket",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "Empresa Ticket"
+}
+
+# VULNERABILITY REPORTS ====================================================
+
+### Primeiros 10 relatórios
 GET /api/v1/vulnerability-reports HTTP/1.1
 Host: {{host}}
 Accept: application/json
 
-
-
-### GET THIRD PAGE
-
+### Terceira página
 GET /api/v1/vulnerability-reports?page=3&size=10 HTTP/1.1
 Host: {{host}}
 Accept: application/json

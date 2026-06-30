@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.example.demo.model.dto.CreateTicketDTO;
 import com.example.demo.model.dto.NewUserDTO;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
@@ -25,14 +26,17 @@ public class UserService {
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder passwordEncoder;
     private Set<String> defaultRoles;
+    private final TicketClient ticketClient;
 
     public UserService(
             UserRepository userRepository, 
             RoleRepository roleRepository,
+            TicketClient ticketClient,
             @Value("${app.user.default.roles}") Set<String> defaultRoles) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;   
+        this.ticketClient = ticketClient;
         this.passwordEncoder = new BCryptPasswordEncoder();
         this.defaultRoles = defaultRoles;
     }
@@ -60,6 +64,8 @@ public class UserService {
             throw new IllegalArgumentException("Alguns papéis não existem");
         }
 
+        roles.addAll(additionalRoles);
+
         if (roles.isEmpty()) {
             throw new IllegalArgumentException("O usuário deve ter pelo menos um papel");
         }
@@ -76,6 +82,21 @@ public class UserService {
         user.setProfile(profile);
 
         userRepository.save(user); 
+
+        try {
+            ticketClient.criarTicket(
+                new CreateTicketDTO(
+                    "Instalar",
+                    "Workstation",
+                    "Instalação automática para novo usuário",
+                    user.getEmail(),
+                    null,
+                    null
+                )
+            );
+        } catch (Exception e) {
+            System.err.println("Não foi possível criar o ticket: " + e.getMessage());
+        }
     }
 
 
