@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // 👈 Garanta esta importação
+import org.springframework.transaction.annotation.Transactional; 
 
 import com.example.demo.model.dto.LoginDTO;
 import com.example.demo.repository.AuthTokenRepository;
