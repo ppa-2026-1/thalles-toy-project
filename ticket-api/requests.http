@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "acao": "Criar",
   "objeto": "Notebook",
-  "detalhes": "Instalar softwares",
+  "detalhes": "Instalar muitos softwares",
   "criador": "admin@email.com"
 }
 

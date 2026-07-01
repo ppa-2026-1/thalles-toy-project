@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.ticket_api.client.NotificationClient;
 import com.example.ticket_api.model.dto.TicketRequestDTO;
 import com.example.ticket_api.repository.TicketRepository;
 import com.example.ticket_api.repository.entity.Ticket;
@@ -16,9 +17,11 @@ import jakarta.transaction.Transactional;
 public class TicketService {
 
   private final TicketRepository ticketRepository;
+  private final NotificationClient notificationClient;
 
-  public TicketService(TicketRepository ticketRepository) {
+  public TicketService(TicketRepository ticketRepository, NotificationClient notificationClient) {
     this.ticketRepository = ticketRepository;
+    this.notificationClient = notificationClient;
   }
 
   @Transactional
@@ -41,6 +44,11 @@ public class TicketService {
     ticket.setStatus(TicketStatus.ABERTO);
     ticket.setUpdatedAt(LocalDateTime.now());
     ticketRepository.save(ticket);
+    
+    notificationClient.enviar(
+      List.of(ticket.getCriador()),
+      "Seu ticket foi criado."
+    );
   }
 
   public List<Ticket> listarTodos() {

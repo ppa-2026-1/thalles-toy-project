@@ -9,7 +9,7 @@ Host: {{host}}
 Content-Type: application/json
 
 {
-    "username": "novo",
+    "username": "novoa",
     "password": "1234RT56"
 }
 
@@ -20,26 +20,22 @@ Authorization: Bearer 0225c6df-d105-4786-acdc-11286a24487a
 
 # USERS ===================================================================
 
-### Listar usuários
-GET /api/v1/users HTTP/1.1
-Host: {{host}}
-Accept: application/json
-
 ### Listar usuários (autenticado)
 GET /api/v1/users HTTP/1.1
 Host: {{host}}
 Accept: application/json
-Authorization: Bearer e8e15551-9fbe-40f7-87da-aa9de6f8939e
+Authorization: Bearer ce7cafe1-6637-43f5-906c-2f604f605a22
+
 ### Criar usuário válido
 POST /api/v1/users HTTP/1.1
 Host: {{host}}
 Content-Type: application/json
 
 {
-    "email": "novoa@email.com",
+    "email": "novo@email.com",
     "password": "1234RT56",
-    "handle": "novoa",
-    "name": "Novoa Usuário",
+    "handle": "novo",
+    "name": "Novo Usuário",
     "roles": [
         "ROLE_USER"
     ],
@@ -60,24 +56,6 @@ Content-Type: application/json
         "ROLE_USER"
     ],
     "company": "Empresa"
-}
-
-# INTEGRAÇÃO USER -> TICKET ===============================================
-
-### Criar usuário (deve gerar automaticamente um ticket)
-POST /api/v1/users HTTP/1.1
-Host: {{host}}
-Content-Type: application/json
-
-{
-    "email": "ticket@email.com",
-    "password": "1234RT56",
-    "handle": "ticketuser",
-    "name": "Usuário Ticket",
-    "roles": [
-        "ROLE_USER"
-    ],
-    "company": "Empresa Ticket"
 }
 
 # VULNERABILITY REPORTS ====================================================
